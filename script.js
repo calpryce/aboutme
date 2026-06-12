@@ -1,9 +1,36 @@
 /* ============================================================
-   Calum Pryce — portfolio interactions
+   Calum Pryce - portfolio interactions
    ============================================================ */
 "use strict";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ============================================================
+   FEATURE TOGGLE — "At the bench" ELISA plate section
+   ------------------------------------------------------------
+   Flip this to true to show the ELISA section again,
+   or false to hide it. When hidden, its nav link is removed
+   and the remaining sections renumber themselves so there
+   are no gaps in the 01, 02, 03… index. Nothing is deleted.
+   ============================================================ */
+const SHOW_ELISA = false;
+
+(function toggleElisa() {
+  const bench = document.getElementById("bench");
+  const benchLink = document.querySelector('#navLinks a[href="#bench"]');
+
+  if (!SHOW_ELISA) {
+    if (bench) bench.hidden = true;
+    if (benchLink) benchLink.hidden = true;
+  }
+
+  // Renumber the index labels of every still-visible section.
+  const indices = [...document.querySelectorAll(".index")].filter(el => {
+    const sec = el.closest("section");
+    return !sec || !sec.hidden;
+  });
+  indices.forEach((el, i) => { el.textContent = String(i + 1).padStart(2, "0"); });
+})();
 
 /* ---------- footer year ---------- */
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -150,7 +177,119 @@ if (!reducedMotion && window.matchMedia("(pointer: fine)").matches) {
 }
 
 /* ============================================================
-   Molecule network canvas — drifting nodes joined by faint
+   ELISA microplate - build 96 wells, light up the positives,
+   and drive the plate-reader screen on hover / focus / tap.
+   ============================================================ */
+(function plate() {
+  const grid = document.getElementById("plate");
+  if (!grid || !SHOW_ELISA) return;   // skip building when the section is hidden
+
+  const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const cols = Array.from({ length: 12 }, (_, i) => i + 1);
+
+  // Positive wells: each maps to something real, with a (playful) OD₄₅₀ value.
+  // tone drives the legend grouping; od (0-1) drives the colour intensity.
+  const samples = {
+    B2:  { label: "Molecular Biology", od: 0.92, note: "My main interest: how life actually works at the molecular level." },
+    C4:  { label: "Genetics",          od: 0.88, note: "Gene expression, inheritance and CRISPR technologies." },
+    D6:  { label: "Biotechnology",     od: 0.81, note: "Where lab science turns into real-world application." },
+    C9:  { label: "Cancer Research UK", od: 0.84, note: "Ran 100 miles in a month, and the team raised over £4,000." },
+    E3:  { label: "Microscopy",        od: 0.64, note: "Sample preparation, slides and light microscopy." },
+    F8:  { label: "Data Analysis",     od: 0.59, note: "Cleaning and visualising data in Python and Excel." },
+    G5:  { label: "Scientific Writing", od: 0.66, note: "Reports, lab books and literature review." },
+    E11: { label: "Surf Society",      od: 0.41, note: "President for 26/27, and a bit of leadership outside the lab." },
+  };
+
+  // readout elements
+  const elWell   = grid.closest(".container").querySelector(".reader-well");
+  const elSample = document.querySelector(".reader-sample");
+  const elOd     = document.getElementById("readerOd");
+  const elFill   = document.getElementById("readerFill");
+  const elNote   = document.getElementById("readerNote");
+
+  let activeWell = null;
+
+  function show(id, well) {
+    const s = samples[id];
+    if (activeWell) activeWell.classList.remove("active");
+    well.classList.add("active");
+    activeWell = well;
+
+    elWell.textContent = id;
+    elSample.textContent = s.label;
+    elNote.textContent = s.note;
+    // animate the OD number up to its value
+    animateOd(s.od);
+    elFill.style.width = Math.round(s.od * 100) + "%";
+  }
+
+  let odRaf;
+  function animateOd(target) {
+    cancelAnimationFrame(odRaf);
+    const start = performance.now();
+    (function tick(now) {
+      const p = Math.min((now - start) / 450, 1);
+      elOd.textContent = (target * (1 - Math.pow(1 - p, 3))).toFixed(2);
+      if (p < 1) odRaf = requestAnimationFrame(tick);
+    })(start);
+  }
+
+  // top-left empty corner
+  grid.appendChild(document.createElement("div"));
+  // column number headers
+  cols.forEach(c => {
+    const l = document.createElement("div");
+    l.className = "plate-lbl";
+    l.textContent = c;
+    grid.appendChild(l);
+  });
+
+  // rows
+  rows.forEach(r => {
+    const rl = document.createElement("div");
+    rl.className = "plate-lbl";
+    rl.textContent = r;
+    grid.appendChild(rl);
+
+    cols.forEach(c => {
+      const id = r + c;
+      const well = document.createElement("div");
+      well.className = "well";
+      const s = samples[id];
+
+      if (s) {
+        well.classList.add("pos");
+        well.style.setProperty("--od", s.od);
+        well.style.setProperty("--delay", (Math.random() * 3).toFixed(2) + "s");
+        well.tabIndex = 0;
+        well.setAttribute("role", "button");
+        well.setAttribute("aria-label", `Well ${id}: ${s.label}, absorbance ${s.od}`);
+
+        const reveal = () => show(id, well);
+        well.addEventListener("mouseenter", reveal);
+        well.addEventListener("focus", reveal);
+        well.addEventListener("click", reveal);
+      } else {
+        well.setAttribute("aria-hidden", "true");
+      }
+      grid.appendChild(well);
+    });
+  });
+
+  // run the scan sweep once when the plate scrolls into view
+  const wrap = grid.closest(".plate-wrap");
+  new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (!reducedMotion) wrap.classList.add("scanning");
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 }).observe(grid);
+})();
+
+/* ============================================================
+   Molecule network canvas - drifting nodes joined by faint
    bonds when close; gently repelled by the cursor.
    ============================================================ */
 (function molecules() {

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calum Pryce — Biological Sciences</title>
-  <meta name="description" content="Calum Pryce — BSc Biological Sciences undergraduate at the University of Reading. Molecular biology, biotechnology & genetics." />
+  <title>Calum Pryce | Biological Sciences</title>
+  <meta name="description" content="Calum Pryce, a BSc Biological Sciences undergraduate at the University of Reading who's into molecular biology, biotechnology and genetics." />
 
   <!-- Typography: Fraunces (display serif) + Inter (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,6 +28,7 @@
 
       <nav class="nav-links" id="navLinks" aria-label="Sections">
         <a href="#about">About</a>
+        <a href="#bench">Lab</a>
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
@@ -61,9 +62,10 @@
         </h1>
 
         <p class="hero-sub reveal d2">
-          I'm <strong>Calum Pryce</strong> — a first-year biologist drawn to
-          molecular biology, biotechnology and genetics. I like the moment an
-          experiment turns an idea into evidence.
+          I'm <strong>Calum Pryce</strong>, a first-year biologist who keeps
+          gravitating towards molecular biology, biotechnology and genetics.
+          My favourite bit is the moment an experiment turns a hunch into
+          actual evidence.
         </p>
 
         <div class="hero-actions reveal d3">
@@ -105,40 +107,90 @@
 
         <div class="about-grid">
           <p class="about-lede reveal">
-            “What excites me most is the bridge between theory and the bench —
-            where gene expression, protein function and the logic of evolution
-            stop being diagrams and start being <em>data</em>.”
+            “The part I love most sits between the theory and the bench, where
+            gene expression, protein function and the logic of evolution stop
+            being diagrams in a textbook and start being real <em>data</em>.”
           </p>
 
           <div class="about-body reveal d2">
             <p>
-              I'm a BSc Biological Sciences student at the
-              <strong>University of Reading</strong>, focused on molecular biology,
-              biotechnology and genetics. Weekly practicals are where I'm happiest:
-              pipetting, microscopy, and learning to record and interpret results
-              carefully and honestly.
+              I'm studying BSc Biological Sciences at the
+              <strong>University of Reading</strong>, and I keep coming back to
+              molecular biology, biotechnology and genetics. Honestly, the weekly
+              practicals are the highlight of my week: pipetting, microscopy, and
+              slowly getting better at recording and reading results carefully
+              and honestly.
             </p>
             <p>
-              Outside the lab I lead as <strong>President of the Surf Society
-              (26/27)</strong>, volunteered with <strong>Cancer Research UK</strong>
-              — running 100 miles in a month as part of a team that raised over
-              £4,000 — and hold the <strong>Gold Duke of Edinburgh's Award</strong>.
+              Away from the lab, I'm <strong>President of the Surf Society for
+              26/27</strong>. I've also volunteered with <strong>Cancer Research
+              UK</strong>, where my team ran 100 miles in a month and raised over
+              £4,000 between us, and I've earned my <strong>Gold Duke of
+              Edinburgh's Award</strong>.
             </p>
             <p>
-              Part-time, I cook Filipino street food at Kanto: high pressure,
-              tight timing, exacting hygiene. It turns out a busy kitchen and a
-              busy lab reward exactly the same habits.
+              On the side, I cook Filipino street food at Kanto. It's high
+              pressure, tight timing and strict hygiene, and it turns out a busy
+              kitchen rewards almost exactly the same habits as a busy lab.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= SKILLS ================= -->
-    <section class="section section-tint" id="skills">
+    <!-- ================= LAB BENCH / ELISA PLATE ================= -->
+    <section class="section section-tint" id="bench">
       <div class="container">
         <div class="section-head reveal">
           <span class="index">02</span>
+          <h2>At the bench</h2>
+        </div>
+
+        <p class="bench-intro reveal d2">
+          A 96-well ELISA plate. Hover over a glowing well to read its result on
+          the plate reader. Every positive sample is something I'm working on.
+        </p>
+
+        <div class="bench-grid">
+          <!-- The plate itself (wells injected by script.js) -->
+          <div class="plate-wrap reveal d2">
+            <div class="plate" id="plate" role="group" aria-label="96-well microplate, hover a sample well for details"></div>
+            <div class="plate-scan" id="plateScan" aria-hidden="true"></div>
+            <p class="plate-cap">Microplate · 8 × 12 wells · colorimetric assay</p>
+          </div>
+
+          <!-- Plate-reader readout that updates on hover/focus -->
+          <aside class="reader reveal d3">
+            <div class="reader-screen">
+              <div class="reader-head">
+                <span class="reader-dot"></span> PLATE READER · OD<sub>450</sub>
+              </div>
+              <div class="reader-body" id="readerBody">
+                <p class="reader-well">··</p>
+                <p class="reader-sample">Awaiting selection</p>
+                <div class="reader-od">
+                  <span class="reader-od-label">Absorbance</span>
+                  <span class="reader-od-val" id="readerOd">0.00</span>
+                </div>
+                <div class="reader-track"><div class="reader-fill" id="readerFill"></div></div>
+                <p class="reader-note" id="readerNote">Hover a highlighted well to display its reading.</p>
+              </div>
+            </div>
+            <p class="reader-legend">
+              <span><i class="lg lg-hi"></i> Strong positive</span>
+              <span><i class="lg lg-mid"></i> Positive</span>
+              <span><i class="lg lg-lo"></i> Weak / blank</span>
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="index">03</span>
           <h2>Skills</h2>
         </div>
 
@@ -176,22 +228,23 @@
     </section>
 
     <!-- ================= EXPERIENCE ================= -->
-    <section class="section" id="experience">
+    <section class="section section-tint" id="experience">
       <div class="container">
         <div class="section-head reveal">
-          <span class="index">03</span>
+          <span class="index">04</span>
           <h2>Experience</h2>
         </div>
 
         <div class="exp-list">
           <article class="exp-row reveal">
-            <div class="exp-when">2024 — Now</div>
+            <div class="exp-when">Since 2024</div>
             <div class="exp-main">
               <h3>Chef <span class="exp-org">· Kanto, Cheltenham</span></h3>
               <p>
-                Authentic Filipino dishes in a busy street-food kitchen. Small team,
-                real time pressure, uncompromising food-safety standards —
-                multitasking and communication, sharpened daily.
+                I cook authentic Filipino dishes in a busy street-food kitchen.
+                It's a small team and the pressure is real, with food-safety
+                standards that never slip. My multitasking and communication get
+                a little sharper every shift.
               </p>
             </div>
             <div class="exp-tags"><span>Communication</span><span>Food safety</span><span>Teamwork</span></div>
@@ -202,9 +255,10 @@
             <div class="exp-main">
               <h3>Technical Team Member <span class="exp-org">· The ITSA Digital Trust</span></h3>
               <p>
-                Charity supplying IT to schools in Africa and the UK. Organised donated
-                equipment, kept audit trails for data-protection compliance, and helped
-                meet a delivery schedule shipping ~600 refurbished computers to Kenya.
+                This charity supplies IT to schools across Africa and the UK. I
+                sorted donated equipment, kept audit trails so everything stayed
+                data-protection compliant, and helped hit a delivery deadline
+                that sent around 600 refurbished computers to Kenya.
               </p>
             </div>
             <div class="exp-tags"><span>Data management</span><span>Coordination</span><span>Logistics</span></div>
@@ -215,9 +269,10 @@
             <div class="exp-main">
               <h3>Technology &amp; Systems Assistant <span class="exp-org">· BladeRoom Data Centres</span></h3>
               <p>
-                Work-experience week spanning Microsoft installs, mobile-device
-                management, IT security and troubleshooting — including a system
-                linking office phones via Apple Configurator.
+                A week of work experience that covered Microsoft installs,
+                mobile-device management, IT security and troubleshooting. I even
+                helped set up a system that linked the office phones through
+                Apple Configurator.
               </p>
             </div>
             <div class="exp-tags"><span>Troubleshooting</span><span>IT security</span><span>Systems</span></div>
@@ -227,10 +282,10 @@
     </section>
 
     <!-- ================= PROJECTS ================= -->
-    <section class="section section-tint" id="projects">
+    <section class="section" id="projects">
       <div class="container">
         <div class="section-head reveal">
-          <span class="index">04</span>
+          <span class="index">05</span>
           <h2>Projects</h2>
         </div>
 
@@ -238,12 +293,13 @@
           <article class="proj-card tilt reveal">
             <div class="proj-top">
               <span class="proj-emoji">🧫</span>
-              <span class="proj-no">P–01</span>
+              <span class="proj-no">P-01</span>
             </div>
             <h3>Enzyme Kinetics Investigation</h3>
             <p>
-              Effect of temperature and pH on catalase activity — replicate trials,
-              control design and a full statistical write-up.
+              I tested how temperature and pH affect catalase activity, running
+              replicate trials, designing proper controls and pulling it all
+              together into a full statistical write-up.
             </p>
             <div class="proj-tags"><span>Experimental design</span><span>Excel</span><span>Report writing</span></div>
           </article>
@@ -251,12 +307,13 @@
           <article class="proj-card tilt reveal d2">
             <div class="proj-top">
               <span class="proj-emoji">🧬</span>
-              <span class="proj-no">P–02</span>
+              <span class="proj-no">P-02</span>
             </div>
             <h3>DNA Extraction &amp; Gel Visualisation</h3>
             <p>
-              Extracted DNA from plant tissue, visualised fragments via gel
-              electrophoresis, and presented the methodology to a seminar group.
+              I extracted DNA from plant tissue, visualised the fragments with
+              gel electrophoresis, and then walked a seminar group through the
+              whole method.
             </p>
             <div class="proj-tags"><span>Molecular techniques</span><span>Lab book</span><span>Presenting</span></div>
           </article>
@@ -264,12 +321,13 @@
           <article class="proj-card tilt reveal d3">
             <div class="proj-top">
               <span class="proj-emoji">📈</span>
-              <span class="proj-no">P–03</span>
+              <span class="proj-no">P-03</span>
             </div>
             <h3>Ecology Field Data Analysis</h3>
             <p>
-              Independent mini-project: cleaned field-trip species data in Python
-              and Excel, plotted diversity indices, drew cautious conclusions.
+              An independent mini-project where I cleaned species data from a
+              field trip in Python and Excel, plotted diversity indices, and drew
+              some careful conclusions from it.
             </p>
             <div class="proj-tags"><span>Python</span><span>Visualisation</span><span>Field sampling</span></div>
           </article>
@@ -278,40 +336,41 @@
     </section>
 
     <!-- ================= EDUCATION ================= -->
-    <section class="section" id="education">
+    <section class="section section-tint" id="education">
       <div class="container">
         <div class="section-head reveal">
-          <span class="index">05</span>
+          <span class="index">06</span>
           <h2>Education</h2>
         </div>
 
         <div class="edu-list">
           <article class="edu-row reveal">
-            <div class="edu-when">2025 — 2028</div>
+            <div class="edu-when">2025 to 2028</div>
             <div class="edu-main">
               <h3>BSc (Hons) Biological Sciences</h3>
               <p class="edu-where">University of Reading</p>
-              <p>President — Surf Society 26/27. Core modules across cell biology,
-                 biochemistry, genetics, physiology and ecology.</p>
+              <p>President of the Surf Society for 26/27. My core modules run
+                 across cell biology, biochemistry, genetics, physiology and
+                 ecology.</p>
             </div>
           </article>
 
           <article class="edu-row reveal">
-            <div class="edu-when">2023 — 2025</div>
+            <div class="edu-when">2023 to 2025</div>
             <div class="edu-main">
               <h3>A-Levels</h3>
               <p class="edu-where">Balcarras Sixth Form, Cheltenham</p>
-              <p>EPQ — A · Computer Science — B · Biology — C · Chemistry — C</p>
+              <p>EPQ: A · Computer Science: B · Biology: C · Chemistry: C</p>
             </div>
           </article>
 
           <article class="edu-row reveal">
-            <div class="edu-when">2022 — 2026</div>
+            <div class="edu-when">2022 to 2026</div>
             <div class="edu-main">
               <h3>Duke of Edinburgh's Award</h3>
               <p class="edu-where">Gold (2026) · Bronze (2022)</p>
-              <p>Expedition, skill, physical and volunteering sections completed
-                 through to Gold level.</p>
+              <p>I worked through the expedition, skill, physical and volunteering
+                 sections all the way to Gold level.</p>
             </div>
           </article>
         </div>
@@ -321,17 +380,17 @@
     <!-- ================= CONTACT ================= -->
     <section class="contact" id="contact">
       <div class="container">
-        <p class="contact-kicker reveal">06 — Contact</p>
+        <p class="contact-kicker reveal"><span class="index">07</span> · Contact</p>
         <h2 class="contact-title reveal">Let's make<br /><em>something grow.</em></h2>
 
-        <a class="contact-mail reveal d2 magnetic" href="mailto:calum1234.pryce@gmail.com">
-          calum1234.pryce@gmail.com <span class="arrow">→</span>
+        <a class="contact-mail reveal d2 magnetic" href="mailto:calum.pryce@icloud.com">
+          calum.pryce@icloud.com <span class="arrow">→</span>
         </a>
 
         <div class="contact-links reveal d3">
-          <a href="https://www.linkedin.com/in/calum-pryce-670a40359" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="https://www.linkedin.com/in/calum-pryce-670a40359/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           <a href="https://www.cancerresearchuk.org/" target="_blank" rel="noopener noreferrer">CRUK Volunteering ↗</a>
-          <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="https://github.com/calpryce" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
       </div>
     </section>
